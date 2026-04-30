@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Truck Stop Jerk Kitchen – Authentic Jamaican Jerk Chicken</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #006B3F;
+    --gold: #FDB927;
+    --black: #1a1a1a;
+    --red: #CC2529;
+    --white: #FFFDF5;
+    --cream: #FFF8E7;
+    --dark-green: #004A2C;
+    --smoke: #F5F0E8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family:'Nunito',sans-serif; background:var(--white); color:var(--black); overflow-x:hidden; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; width:100%; z-index:100;
+    background:var(--black);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 2rem;
+    height:64px;
+    border-bottom:4px solid var(--gold);
+  }
+  .nav-logo { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--gold); letter-spacing:2px; }
+  .nav-logo span { color:var(--green); }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { color:var(--white); text-decoration:none; font-weight:700; font-size:0.9rem; letter-spacing:1px; text-transform:uppercase; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height:100vh;
+    background: var(--black);
+    display:flex; align-items:center; justify-content:center;
+    padding:80px 2rem 2rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-bg-stripes {
+    position:absolute; inset:0; z-index:0;
+    background: repeating-linear-gradient(
+      -20deg,
+      transparent,
+      transparent 60px,
+      rgba(0,107,63,0.12) 60px,
+      rgba(0,107,63,0.12) 120px
+    );
+  }
+  .hero-flag-bar {
+    position:absolute; top:0; left:0; right:0; height:8px;
+    background: linear-gradient(90deg, var(--green) 33%, var(--gold) 33%, var(--gold) 66%, var(--red) 66%);
+  }
+  .hero-content { position:relative; z-index:1; text-align:center; max-width:800px; }
+  .hero-badge {
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:3px;
+    font-size:1rem;
+    padding:6px 20px;
+    border-radius:4px;
+    margin-bottom:1.5rem;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
+  .hero h1 {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(4rem,10vw,8rem);
+    line-height:0.9;
+    color:var(--white);
+    letter-spacing:4px;
+    margin-bottom:0.5rem;
+  }
+  .hero h1 .accent { color:var(--gold); display:block; }
+  .hero-sub {
+    font-family:'Permanent Marker',cursive;
+    font-size:clamp(1rem,2.5vw,1.4rem);
+    color:var(--green);
+    margin-bottom:2rem;
+    letter-spacing:2px;
+  }
+  .hero-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn-primary {
+    background:var(--gold);
+    color:var(--black);
+    font-family:'Nunito',sans-serif;
+    font-weight:900;
+    padding:14px 32px;
+    border:none; border-radius:6px;
+    font-size:1rem; cursor:pointer; text-decoration:none;
+    text-transform:uppercase; letter-spacing:1px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display:inline-block;
+  }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(253,185,39,0.4); }
+  .btn-outline {
+    background:transparent;
+    color:var(--white);
+    border:2px solid var(--green);
+    font-family:'Nunito',sans-serif;
+    font-weight:900;
+    padding:14px 32px;
+    border-radius:6px;
+    font-size:1rem; cursor:pointer; text-decoration:none;
+    text-transform:uppercase; letter-spacing:1px;
+    transition: background 0.2s, color 0.2s;
+    display:inline-block;
+  }
+  .btn-outline:hover { background:var(--green); color:var(--white); }
+  .hero-emojis {
+    position:absolute; font-size:3rem; opacity:0.15; z-index:0;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-20px) rotate(5deg)} }
+  .e1{top:15%; left:5%; animation-delay:0s}
+  .e2{top:25%; right:8%; animation-delay:1s}
+  .e3{bottom:20%; left:10%; animation-delay:2s}
+  .e4{bottom:30%; right:5%; animation-delay:3s}
+
+  /* SPECIALS TICKER */
+  .ticker {
+    background:var(--green);
+    color:var(--white);
+    padding:10px 0;
+    overflow:hidden;
+    white-space:nowrap;
+    border-top:3px solid var(--gold);
+    border-bottom:3px solid var(--gold);
+  }
+  .ticker-inner {
+    display:inline-block;
+    animation: ticker 28s linear infinite;
+    font-weight:700;
+    font-size:0.95rem;
+    letter-spacing:1px;
+  }
+  @keyframes ticker { 0%{transform:translateX(100vw)} 100%{transform:translateX(-100%)} }
+  .ticker-sep { color:var(--gold); margin:0 2rem; }
+
+  /* SECTIONS */
+  section { padding:80px 2rem; }
+  .section-label {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1rem;
+    letter-spacing:4px;
+    color:var(--green);
+    text-transform:uppercase;
+    margin-bottom:0.5rem;
+  }
+  .section-title {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(2.5rem,5vw,4rem);
+    line-height:1;
+    margin-bottom:1rem;
+    color:var(--black);
+  }
+  .section-divider {
+    width:60px; height:5px;
+    background:var(--gold);
+    margin-bottom:2.5rem;
+    border-radius:3px;
+  }
+
+  /* SPECIALS */
+  .specials { background:var(--cream); }
+  .specials-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:1.5rem;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .special-card {
+    background:var(--white);
+    border-radius:16px;
+    overflow:hidden;
+    border:2px solid transparent;
+    transition:border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position:relative;
+  }
+  .special-card:hover { border-color:var(--gold); transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.12); }
+  .special-card-img {
+    width:100%; height:180px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:5rem;
+    background:var(--black);
+  }
+  .special-card-img.green-bg { background:var(--green); }
+  .special-card-img.gold-bg { background:var(--gold); }
+  .special-card-img.red-bg { background:var(--red); }
+  .special-tag {
+    position:absolute; top:12px; right:12px;
+    background:var(--red); color:var(--white);
+    font-family:'Bebas Neue',sans-serif;
+    font-size:0.9rem; letter-spacing:2px;
+    padding:4px 10px; border-radius:4px;
+  }
+  .special-card-body { padding:1.25rem; }
+  .special-card-body h3 { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:1px; margin-bottom:0.25rem; }
+  .special-card-body p { font-size:0.9rem; color:#555; margin-bottom:1rem; line-height:1.5; }
+  .special-price { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--green); }
+  .special-price span { font-size:1rem; color:#888; font-family:'Nunito',sans-serif; font-weight:400; text-decoration:line-through; margin-left:8px; }
+
+  /* MENU */
+  .menu { background:var(--white); }
+  .menu-container { max-width:1100px; margin:0 auto; }
+  .menu-tabs { display:flex; gap:0.75rem; margin-bottom:2.5rem; flex-wrap:wrap; }
+  .menu-tab {
+    padding:10px 24px;
+    border-radius:50px;
+    border:2px solid var(--black);
+    background:transparent;
+    font-family:'Nunito',sans-serif;
+    font-weight:700;
+    font-size:0.9rem;
+    cursor:pointer;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    transition:all 0.2s;
+  }
+  .menu-tab.active, .menu-tab:hover { background:var(--black); color:var(--white); }
+  .menu-section { display:none; }
+  .menu-section.active { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.25rem; }
+  .menu-item {
+    display:flex; align-items:flex-start; gap:1rem;
+    padding:1.25rem;
+    border:1.5px solid #E8E4D8;
+    border-radius:12px;
+    transition:border-color 0.2s, box-shadow 0.2s;
+    background:var(--smoke);
+  }
+  .menu-item:hover { border-color:var(--green); box-shadow:0 4px 12px rgba(0,107,63,0.1); }
+  .menu-item-emoji { font-size:2.5rem; flex-shrink:0; line-height:1; }
+  .menu-item-info { flex:1; }
+  .menu-item-info h4 { font-weight:800; font-size:1rem; margin-bottom:0.2rem; }
+  .menu-item-info p { font-size:0.85rem; color:#666; line-height:1.4; margin-bottom:0.5rem; }
+  .menu-item-price { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; color:var(--green); }
+  .heat-badge {
+    display:inline-block;
+    font-size:0.7rem;
+    padding:2px 8px;
+    border-radius:20px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    margin-left:6px;
+  }
+  .mild { background:#E8F5E9; color:#2E7D32; }
+  .medium { background:#FFF3E0; color:#E65100; }
+  .hot { background:#FFEBEE; color:#C62828; }
+  .xhot { background:#B71C1C; color:#fff; }
+
+  /* LOCATION */
+  .location { background:var(--black); color:var(--white); }
+  .location .section-title { color:var(--white); }
+  .location-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; max-width:1100px; margin:0 auto; align-items:start; }
+  @media(max-width:700px){ .location-grid { grid-template-columns:1fr; gap:2rem; } }
+  .location-info h3 { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--gold); margin-bottom:1rem; letter-spacing:1px; }
+  .location-detail {
+    display:flex; gap:1rem; align-items:flex-start;
+    margin-bottom:1.5rem;
+  }
+  .loc-icon {
+    width:44px; height:44px; border-radius:50%;
+    background:var(--green);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.2rem; flex-shrink:0;
+  }
+  .loc-text { flex:1; }
+  .loc-text strong { display:block; font-size:0.85rem; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+  .loc-text span { font-size:1rem; line-height:1.5; }
+  .map-frame {
+    background:#1f2a1f;
+    border-radius:16px;
+    overflow:hidden;
+    border:3px solid var(--green);
+    height:320px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .map-placeholder {
+    text-align:center; color:var(--white); opacity:0.7; padding:2rem;
+  }
+  .map-placeholder .map-pin { font-size:4rem; display:block; margin-bottom:1rem; }
+  .map-link {
+    display:inline-block;
+    margin-top:1rem;
+    background:var(--gold);
+    color:var(--black);
+    padding:12px 24px;
+    border-radius:8px;
+    font-weight:900;
+    text-decoration:none;
+    font-size:0.9rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+
+  /* CONTACT */
+  .contact { background:var(--cream); }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; max-width:900px; margin:0 auto; }
+  @media(max-width:700px){ .contact-grid { grid-template-columns:1fr; } }
+  .contact-card {
+    background:var(--white);
+    border-radius:16px;
+    padding:2rem;
+    border:2px solid #E8E4D8;
+  }
+  .contact-card h3 { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; margin-bottom:1.5rem; letter-spacing:1px; }
+  .contact-item { display:flex; gap:1rem; align-items:center; margin-bottom:1.2rem; }
+  .contact-icon { font-size:1.4rem; width:36px; text-align:center; }
+  .contact-text a { color:var(--green); font-weight:700; text-decoration:none; }
+  .contact-text a:hover { text-decoration:underline; }
+  .contact-text strong { display:block; font-size:0.8rem; color:#999; text-transform:uppercase; letter-spacing:1px; margin-bottom:2px; }
+  .socials { display:flex; gap:1rem; margin-top:1.5rem; }
+  .social-btn {
+    padding:10px 18px;
+    border-radius:8px;
+    font-weight:700; font-size:0.85rem;
+    text-decoration:none; text-transform:uppercase; letter-spacing:1px;
+    transition:opacity 0.2s;
+  }
+  .social-btn:hover { opacity:0.8; }
+  .fb { background:#1877F2; color:#fff; }
+  .ig { background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color:#fff; }
+  .order-form input, .order-form textarea {
+    width:100%;
+    padding:12px 16px;
+    border:2px solid #E8E4D8;
+    border-radius:8px;
+    font-family:'Nunito',sans-serif;
+    font-size:0.95rem;
+    margin-bottom:1rem;
+    transition:border-color 0.2s;
+    background:var(--smoke);
+  }
+  .order-form input:focus, .order-form textarea:focus { outline:none; border-color:var(--green); }
+  .order-form textarea { height:100px; resize:vertical; }
+
+  /* FOOTER */
+  footer {
+    background:var(--dark-green);
+    color:var(--white);
+    text-align:center;
+    padding:2.5rem 2rem;
+    border-top:4px solid var(--gold);
+  }
+  .footer-logo { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; color:var(--gold); letter-spacing:3px; margin-bottom:0.5rem; }
+  .footer-tagline { font-family:'Permanent Marker',cursive; color:var(--green); font-size:1rem; margin-bottom:1rem; }
+  footer p { font-size:0.85rem; opacity:0.6; }
+
+  /* WAVE DIVIDER */
+  .wave { display:block; line-height:0; }
+
+  /* TRUCK IMAGES */
+  .hero-truck {
+    position:absolute;
+    bottom:0; right:-20px;
+    width:clamp(280px,45vw,600px);
+    z-index:1;
+    opacity:0.92;
+    filter:drop-shadow(0 0 40px rgba(253,185,39,0.25));
+    animation: truckFloat 5s ease-in-out infinite;
+  }
+  @keyframes truckFloat {
+    0%,100%{transform:translateY(0px)}
+    50%{transform:translateY(-14px)}
+  }
+  .truck-gallery {
+    background:var(--black);
+    padding:60px 2rem;
+    overflow:hidden;
+  }
+  .truck-gallery-inner {
+    display:flex;
+    gap:0;
+    max-width:1200px;
+    margin:0 auto;
+    align-items:stretch;
+  }
+  .truck-gallery-item {
+    flex:1;
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+    min-height:320px;
+    display:flex; align-items:center; justify-content:center;
+    transition:flex 0.5s ease;
+  }
+  .truck-gallery-item:hover { flex:2.5; }
+  .truck-gallery-item img {
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center bottom;
+    transition:transform 0.5s ease, filter 0.3s;
+    filter:brightness(0.85) drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+  }
+  .truck-gallery-item:hover img { transform:scale(1.04); filter:brightness(1) drop-shadow(0 12px 32px rgba(253,185,39,0.3)); }
+  .truck-gallery-overlay {
+    position:absolute; bottom:0; left:0; right:0;
+    background:linear-gradient(transparent,rgba(0,0,0,0.75));
+    padding:1.5rem 1rem 1rem;
+    opacity:0; transition:opacity 0.3s;
+    text-align:center;
+  }
+  .truck-gallery-item:hover .truck-gallery-overlay { opacity:1; }
+  .truck-gallery-overlay span {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.2rem; letter-spacing:2px;
+    color:var(--gold);
+  }
+  .truck-strip {
+    display:flex; align-items:center; gap:2rem;
+    padding:3rem 2rem;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .truck-strip img {
+    width:clamp(200px,35%,420px);
+    flex-shrink:0;
+    filter:drop-shadow(0 8px 24px rgba(0,0,0,0.2));
+    transition:transform 0.4s;
+  }
+  .truck-strip img:hover { transform:scale(1.03) rotate(-1deg); }
+  .truck-strip-text { flex:1; }
+  .truck-strip-text h3 {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(1.8rem,3vw,2.8rem);
+    letter-spacing:2px;
+    margin-bottom:0.75rem;
+  }
+  .truck-strip-text p {
+    font-size:1rem; line-height:1.6; color:#555;
+    margin-bottom:1.25rem;
+  }
+  .truck-strip.reverse { flex-direction:row-reverse; }
+  .truck-strip.dark { background:var(--black); border-radius:20px; }
+  .truck-strip.dark .truck-strip-text h3 { color:var(--gold); }
+  .truck-strip.dark .truck-strip-text p { color:#bbb; }
+
+  /* RESPONSIVE NAV */
+  @media(max-width:768px){
+    .truck-gallery-inner { flex-direction:column; }
+    .truck-gallery-item { min-height:220px; }
+    .truck-strip, .truck-strip.reverse { flex-direction:column; }
+    .truck-strip img { width:100%; max-width:380px; }
+  }
+  @media(max-width:640px){
+    .nav-links { gap:1rem; }
+    .nav-links a { font-size:0.75rem; }
+    .hero-truck { width:65vw; opacity:0.5; }
+  }
+  @media(max-width:480px){
+    .nav-links { display:none; }
+    .hero-truck { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Truck<span>Stop</span> Jerk</div>
+  <ul class="nav-links">
+    <li><a href="#specials">Specials</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#location">Find Us</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-flag-bar"></div>
+  <div class="hero-bg-stripes"></div>
+  <span class="hero-emojis e1">🍗</span>
+  <span class="hero-emojis e2">🌶️</span>
+  <span class="hero-emojis e3">🇯🇲</span>
+  <span class="hero-emojis e4">🔥</span>
+  <div class="hero-content">
+    <div class="hero-badge">🇯🇲 &nbsp;Now Serving Maidenhead &nbsp;🇯🇲</div>
+    <h1>
+      <span>Truck Stop</span>
+      <span class="accent">Jerk Kitchen</span>
+    </h1>
+    <p class="hero-sub">The Authentic Jamaican Jerk Chicken Experience</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">🍗 See Full Menu</a>
+      <a href="#specials" class="btn-outline">🔥 Today's Specials</a>
+    </div>
+  </div>
+  <!-- Truck image floating bottom-right of hero -->
+  <img src="assets/truck-1.png" alt="Truck Stop Jerk Kitchen food truck" class="hero-truck" />
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-inner">
+    🔥 THIS WEEK'S SPECIAL: Jerk Chicken Platter £10.99 <span class="ticker-sep">★</span>
+    🍗 FAMILY FEAST: 2 Whole Jerk Chickens + 4 Sides – £34.99 <span class="ticker-sep">★</span>
+    🌴 FESTIVAL FRIDAYS: Free Festivals with any main over £8 <span class="ticker-sep">★</span>
+    🥭 NEW: Mango Scotch Bonnet Sauce – try it today! <span class="ticker-sep">★</span>
+    📍 Find us in Maidenhead Town Centre – Fri & Sat 11am–8pm <span class="ticker-sep">★</span>
+  </span>
+</div>
+
+<!-- SPECIALS -->
+<section class="specials" id="specials">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-label">🔥 Hot Right Now</div>
+    <h2 class="section-title">This Week's Specials</h2>
+    <div class="section-divider"></div>
+    <div class="specials-grid">
+      <div class="special-card">
+        <div class="special-tag">DEAL OF WEEK</div>
+        <div class="special-card-img green-bg">🍗</div>
+        <div class="special-card-body">
+          <h3>Jerk Chicken Platter</h3>
+          <p>Half chicken marinated 24hrs in our secret jerk blend, served with rice & peas, festival and coleslaw.</p>
+          <div class="special-price">£10.99 <span>£13.50</span></div>
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="special-tag">LIMITED</div>
+        <div class="special-card-img gold-bg">🥩</div>
+        <div class="special-card-body">
+          <h3>Oxtail & Rice Box</h3>
+          <p>Slow-cooked Jamaican oxtail in rich gravy with butter beans, served over seasoned rice and peas.</p>
+          <div class="special-price">£12.99 <span>£15.00</span></div>
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="special-tag">FAMILY DEAL</div>
+        <div class="special-card-img red-bg">🍴</div>
+        <div class="special-card-body">
+          <h3>Family Feast Box</h3>
+          <p>2 whole jerk chickens, 4 portions rice & peas, 4 festivals, coleslaw – feeds the whole crew!</p>
+          <div class="special-price">£34.99 <span>£44.00</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUCK GALLERY – between specials and menu -->
+<div class="truck-gallery">
+  <div style="text-align:center;margin-bottom:2rem;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:4px;color:var(--green);margin-bottom:0.25rem;">THE TRUCK</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3rem);color:var(--white);letter-spacing:2px;">Come Find Us On The Street</h2>
+  </div>
+  <div class="truck-gallery-inner">
+    <div class="truck-gallery-item">
+      <img src="assets/truck-2.png" alt="Truck Stop Jerk Kitchen – side view" />
+      <div class="truck-gallery-overlay"><span>The Kitchen on Wheels</span></div>
+    </div>
+    <div class="truck-gallery-item">
+      <img src="assets/truck-3.png" alt="Truck Stop Jerk Kitchen – front view" />
+      <div class="truck-gallery-overlay"><span>Serving Maidenhead</span></div>
+    </div>
+  </div>
+</div>
+
+
+<section class="menu" id="menu">
+  <div class="menu-container">
+    <div class="section-label">🍽️ Full Menu</div>
+    <h2 class="section-title">What We're Serving</h2>
+    <div class="section-divider"></div>
+    <div class="menu-tabs">
+      <button class="menu-tab active" onclick="showMenu('mains',this)">Mains</button>
+      <button class="menu-tab" onclick="showMenu('sides',this)">Sides & Extras</button>
+      <button class="menu-tab" onclick="showMenu('drinks',this)">Drinks</button>
+    </div>
+
+    <!-- MAINS -->
+    <div class="menu-section active" id="mains">
+      <div class="menu-item">
+        <div class="menu-item-emoji">🍗</div>
+        <div class="menu-item-info">
+          <h4>Quarter Jerk Chicken <span class="heat-badge medium">Medium 🌶️</span></h4>
+          <p>Slow-grilled quarter chicken in our 24hr jerk marinade. Served with rice & peas.</p>
+          <div class="menu-item-price">£7.50</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🍗</div>
+        <div class="menu-item-info">
+          <h4>Half Jerk Chicken <span class="heat-badge hot">Hot 🌶️🌶️</span></h4>
+          <p>Half bird, maximum flavour. Chargrilled to perfection with festival & coleslaw.</p>
+          <div class="menu-item-price">£10.99</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🍗</div>
+        <div class="menu-item-info">
+          <h4>Whole Jerk Chicken <span class="heat-badge hot">Hot 🌶️🌶️</span></h4>
+          <p>The full works. Serves 2–3 people. All sides included.</p>
+          <div class="menu-item-price">£18.00</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🥩</div>
+        <div class="menu-item-info">
+          <h4>Oxtail Box <span class="heat-badge mild">Mild 🌿</span></h4>
+          <p>Jamaican slow-cooked oxtail with butter beans in rich, dark gravy.</p>
+          <div class="menu-item-price">£12.99</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🐟</div>
+        <div class="menu-item-info">
+          <h4>Escovitch Fish <span class="heat-badge medium">Medium 🌶️</span></h4>
+          <p>Fried snapper in classic Jamaican escovitch sauce with peppers & onions.</p>
+          <div class="menu-item-price">£13.50</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🫘</div>
+        <div class="menu-item-info">
+          <h4>Veggie Ackee Box <span class="heat-badge mild">Mild 🌿</span></h4>
+          <p>Ackee & saltfish (or veg option) with callaloo and dumplings.</p>
+          <div class="menu-item-price">£9.50</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🔥</div>
+        <div class="menu-item-info">
+          <h4>Jerk Pork Ribs <span class="heat-badge xhot">🔥 X-Hot</span></h4>
+          <p>Scotch bonnet-heavy jerk marinade on slow-smoked pork ribs. Warning: very spicy!</p>
+          <div class="menu-item-price">£14.00</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🌽</div>
+        <div class="menu-item-info">
+          <h4>Jerk Corn on the Cob <span class="heat-badge medium">Medium 🌶️</span></h4>
+          <p>Charred sweet corn basted in jerk butter. Great as a snack or side.</p>
+          <div class="menu-item-price">£3.50</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDES -->
+    <div class="menu-section" id="sides">
+      <div class="menu-item">
+        <div class="menu-item-emoji">🍚</div>
+        <div class="menu-item-info">
+          <h4>Rice & Peas</h4>
+          <p>Classic Jamaican rice cooked in coconut milk with kidney beans.</p>
+          <div class="menu-item-price">£3.00</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🥟</div>
+        <div class="menu-item-info">
+          <h4>Festival (2 pcs)</h4>
+          <p>Sweet fried dumplings – the perfect jerk chicken companion.</p>
+          <div class="menu-item-price">£2.50</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🥗</div>
+        <div class="menu-item-info">
+          <h4>Coleslaw</h4>
+          <p>Homemade creamy coleslaw with a Jamaican twist.</p>
+          <div class="menu-item-price">£2.00</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🌿</div>
+        <div class="menu-item-info">
+          <h4>Callaloo</h4>
+          <p>Seasoned Jamaican greens sautéed with onion, thyme & scotch bonnet.</p>
+          <div class="menu-item-price">£3.00</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🍠</div>
+        <div class="menu-item-info">
+          <h4>Fried Dumplings (2 pcs)</h4>
+          <p>Traditional Jamaican fried dumplings, golden and crispy.</p>
+          <div class="menu-item-price">£2.00</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🌶️</div>
+        <div class="menu-item-info">
+          <h4>Extra Jerk Sauce</h4>
+          <p>Our secret house jerk sauce. Mild, Medium or Hot – your choice.</p>
+          <div class="menu-item-price">£1.00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRINKS -->
+    <div class="menu-section" id="drinks">
+      <div class="menu-item">
+        <div class="menu-item-emoji">🥤</div>
+        <div class="menu-item-info">
+          <h4>Jamaican Ginger Beer</h4>
+          <p>Spicy, refreshing imported ginger beer – ice cold and perfect.</p>
+          <div class="menu-item-price">£2.50</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🌺</div>
+        <div class="menu-item-info">
+          <h4>Sorrel Juice</h4>
+          <p>Traditional Jamaican hibiscus drink with ginger and cinnamon.</p>
+          <div class="menu-item-price">£2.50</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🥭</div>
+        <div class="menu-item-info">
+          <h4>Mango Punch</h4>
+          <p>Rich Jamaican mango punch – sweet, tropical, and refreshing.</p>
+          <div class="menu-item-price">£2.50</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-emoji">🧃</div>
+        <div class="menu-item-info">
+          <h4>Soft Drinks (Can)</h4>
+          <p>Coke, Sprite, Fanta or Water.</p>
+          <div class="menu-item-price">£1.50</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUCK STRIP – between menu and location -->
+<div style="background:var(--cream);padding:60px 2rem;">
+  <div class="truck-strip">
+    <img src="assets/truck-4.png" alt="Truck Stop Jerk Kitchen at Maidenhead" />
+    <div class="truck-strip-text">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:4px;color:var(--green);margin-bottom:0.4rem;">ONE LOVE, ONE TRUCK</div>
+      <h3>Bringing Jamaica<br>To Maidenhead</h3>
+      <p>We bring the real taste of the Caribbean straight to your high street. Every chicken marinated for 24 hours in our secret jerk blend, every plate made with love and fired on the grill. Fast food? Ya Mon — but never without soul.</p>
+      <a href="#contact" class="btn-primary" style="font-size:0.9rem;padding:12px 24px;">📞 Get In Touch</a>
+    </div>
+  </div>
+</div>
+
+
+<section class="location" id="location">
+  <div class="location-grid">
+    <div class="location-info">
+      <div class="section-label" style="color:var(--gold);">📍 Where To Find Us</div>
+      <h2 class="section-title">Come Find<br>The Truck</h2>
+      <div class="section-divider"></div>
+      <div class="location-detail">
+        <div class="loc-icon">📍</div>
+        <div class="loc-text">
+          <strong>Pitch Location</strong>
+          <span>Maidenhead Town Centre<br>High Street / Market Area<br>Maidenhead, SL6</span>
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="loc-icon">🕐</div>
+        <div class="loc-text">
+          <strong>Opening Hours</strong>
+          <span>Thursday – Friday: 11am – 8pm<br>Saturday: 11am – 9pm<br>Sunday: 12pm – 6pm</span>
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="loc-icon">📞</div>
+        <div class="loc-text">
+          <strong>Phone / WhatsApp</strong>
+          <span>07 0941 5364</span>
+        </div>
+      </div>
+      <p style="font-size:0.85rem;color:#aaa;margin-top:0.5rem;">⚠️ Follow us on social media for last-minute location updates and special event appearances!</p>
+    </div>
+    <div>
+      <div class="map-frame">
+        <div class="map-placeholder">
+          <span class="map-pin">📍</span>
+          <p style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Maidenhead Town Centre</p>
+          <p style="font-size:0.9rem;margin-bottom:1rem;">High Street, SL6</p>
+          <a href="https://maps.google.com/?q=Maidenhead+Town+Centre+High+Street+SL6" target="_blank" class="map-link">Open in Google Maps</a>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+        <div style="background:#1f2a1f;border-radius:12px;padding:1rem;border:1px solid var(--green);text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);">FREE</div>
+          <div style="font-size:0.8rem;color:#aaa;">Parking nearby<br>Queen St Car Park</div>
+        </div>
+        <div style="background:#1f2a1f;border-radius:12px;padding:1rem;border:1px solid var(--green);text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);">5 MIN</div>
+          <div style="font-size:0.8rem;color:#aaa;">Walk from<br>Maidenhead Station</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div style="max-width:900px;margin:0 auto;">
+    <div class="section-label">📲 Get In Touch</div>
+    <h2 class="section-title">Contact & Socials</h2>
+    <div class="section-divider"></div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>📞 Reach Us</h3>
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
+          <div class="contact-text">
+            <strong>Phone / WhatsApp</strong>
+            <a href="tel:07094153564">07 0941 5364</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📘</span>
+          <div class="contact-text">
+            <strong>Facebook</strong>
+            <a href="https://facebook.com/Truck-Stop-Jerk-Kitchen" target="_blank">Truck-Stop Jerk Kitchen</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📸</span>
+          <div class="contact-text">
+            <strong>Instagram</strong>
+            <a href="https://instagram.com/Truck_Stop_Jerk" target="_blank">@Truck_Stop_Jerk</a>
+          </div>
+        </div>
+        <div class="socials">
+          <a href="https://facebook.com/Truck-Stop-Jerk-Kitchen" target="_blank" class="social-btn fb">Facebook</a>
+          <a href="https://instagram.com/Truck_Stop_Jerk" target="_blank" class="social-btn ig">Instagram</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <h3>✉️ Send a Message</h3>
+        <div class="order-form">
+          <input type="text" placeholder="Your Name" />
+          <input type="text" placeholder="Phone or Email" />
+          <textarea placeholder="Ask about catering, large orders, upcoming specials or events..."></textarea>
+          <button class="btn-primary" style="width:100%;border-radius:8px;cursor:pointer;" onclick="this.textContent='✅ Message Sent!';this.style.background='var(--green)'">Send Message 🚀</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🇯🇲 Truck Stop Jerk 🇯🇲</div>
+  <div class="footer-tagline">Fast Food, Ya Mon!</div>
+  <p>Maidenhead Town Centre &nbsp;|&nbsp; 07 0941 5364 &nbsp;|&nbsp; @Truck_Stop_Jerk</p>
+  <p style="margin-top:0.5rem;">© 2025 Truck Stop Jerk Kitchen. All rights reserved. One Love. 🙏</p>
+</footer>
+
+<script>
+function showMenu(id, btn) {
+  document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Scroll highlight nav
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let scrollY = window.scrollY;
+  document.querySelectorAll('section[id]').forEach(sec => {
+    if(scrollY >= sec.offsetTop - 100) {
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#'+sec.id ? 'var(--gold)' : '';
+      });
+    }
+  });
+});
+</script>
+</body>
+</html>
